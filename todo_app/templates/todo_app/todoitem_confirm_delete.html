@@ -1,0 +1,22 @@
+<!-- todo_list/todo_app/templates/todo_app/todoitem_confirm_delete.html -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Deletar tarefa</h3>
+
+<p>Voce deseja deletar o item: <b>{{ object.title }}</b>
+   da lista <i>{{ todo_list.titulo }}</i>?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input
+        value="Sim, deletar."
+        type="submit">
+    <input
+        value="Cancelar."
+        type="button"
+        onclick="location.href='{% url "list" todo_list.id %}';">
+</form>
+
+{% endblock %}

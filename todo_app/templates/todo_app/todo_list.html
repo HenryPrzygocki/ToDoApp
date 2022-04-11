@@ -1,0 +1,47 @@
+<!-- todo_list/todo_app/templates/todo_app/todo_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <div>
+        <div>
+            <h3>Editar lista:</h3>
+            <h5>{{ todo_list.titulo | upper }}</h5>
+        </div>
+        <ul>
+            {% for todo in object_list %}
+            <li>
+                <div>
+			{% if not todo.feita %}
+                    <div
+                        role="button"
+			onclick="location.href='{% url "item-update" todo_list.id todo.id %}'">
+                        {{ todo.titulo }}
+                        (Criada {{ todo.data_criacao | date:"l, j F" }})
+                    </div>
+		    	{% else %}
+			<div
+				role="button"
+				onclick="location.href='{% url "item-update" todo_list.id todo.id %}'">
+				<del>{{ todo.titulo }}</del>
+				(Completa)
+			{% endif %}
+                </div>
+            </li>
+            {% empty %}
+            <p>Nao existem items nesta lista.</p>
+            {% endfor %}
+        </ul>
+        <p>
+            <input
+                value="Adicionar novo item"
+                type="button"
+		onclick="location.href='{% url "item-add" todo_list.id %}'" />
+	    <input
+		    value="Deletar esta lista"
+		    type="button"
+		    onclick="location.href='{% url "list-delete" todo_list.id %}'"/>
+        </p>
+    </div>
+</div>
+{% endblock %}
